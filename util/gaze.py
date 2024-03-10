@@ -2,6 +2,7 @@
 import cv2 as cv
 import numpy as np
 
+
 def pitchyaw_to_vector(pitchyaws):
     r"""Convert given yaw (:math:`\theta`) and pitch (:math:`\phi`) angles to unit gaze vectors.
 
@@ -36,6 +37,7 @@ def vector_to_pitchyaw(vectors):
     out[:, 0] = np.arcsin(vectors[:, 1])  # theta
     out[:, 1] = np.arctan2(vectors[:, 0], vectors[:, 2])  # phi
     return out
+
 
 radians_to_degrees = 180.0 / np.pi
 

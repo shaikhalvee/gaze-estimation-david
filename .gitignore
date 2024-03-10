@@ -13,3 +13,5 @@ checkpoint*
 *.pt
 *.tar.gz
 *.pdf
+
+gazedavidenv/

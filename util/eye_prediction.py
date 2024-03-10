@@ -1,7 +1,7 @@
 from util.eye_sample import EyeSample
 
 
-class EyePrediction():
+class EyePrediction:
     def __init__(self, eye_sample: EyeSample, landmarks, gaze):
         self._eye_sample = eye_sample
         self._landmarks = landmarks
