@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cd ${DIR}/..
+cd "${DIR}"/.. || exit
 
 # Download face landmark predictor model
 wget http://dlib.net/files/shape_predictor_5_face_landmarks.dat.bz2
