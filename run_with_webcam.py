@@ -210,5 +210,3 @@ def run_eyenet(eyes: List[EyeSample], ow=160, oh=96) -> List[EyePrediction]:
 
 if __name__ == '__main__':
     main()
-
-# I need to work hard
