@@ -37,6 +37,7 @@ nlandmarks = checkpoint['nlandmarks']
 eyenet = EyeNet(nstack=nstack, nfeatures=nfeatures, nlandmarks=nlandmarks).to(device)
 eyenet.load_state_dict(checkpoint['model_state_dict'])
 
+
 def main():
     current_face = None
     landmarks = None
@@ -59,7 +60,7 @@ def main():
                 current_face = next_face
 
         if current_face is not None:
-            #draw_cascade_face(current_face, orig_frame)
+            # draw_cascade_face(current_face, orig_frame)
             next_landmarks = detect_landmarks(current_face, gray)
 
             if landmarks is not None:
@@ -67,8 +68,7 @@ def main():
             else:
                 landmarks = next_landmarks
 
-            #draw_landmarks(landmarks, orig_frame)
-
+            # draw_landmarks(landmarks, orig_frame)
 
         if landmarks is not None:
             eye_samples = segment_eyes(gray, landmarks)
@@ -191,7 +191,7 @@ def run_eyenet(eyes: List[EyeSample], ow=160, oh=96) -> List[EyePrediction]:
             assert gaze.shape == (2,)
             assert landmarks.shape == (34, 2)
 
-            landmarks = landmarks * np.array([oh/48, ow/80])
+            landmarks = landmarks * np.array([oh / 48, ow / 80])
 
             temp = np.zeros((34, 3))
             if eye.is_left:
