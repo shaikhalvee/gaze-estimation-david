@@ -8,10 +8,10 @@ def batchnorm(x):
 
 
 class Conv(nn.Module):
-    def __init__(self, inp_dim, out_dim, kernel_size=3, stride = 1, bn = False, relu = True):
+    def __init__(self, inp_dim, out_dim, kernel_size=3, stride=1, bn=False, relu=True):
         super(Conv, self).__init__()
         self.inp_dim = inp_dim
-        self.conv = nn.Conv2d(inp_dim, out_dim, kernel_size, stride, padding=(kernel_size-1)//2, bias=True)
+        self.conv = nn.Conv2d(inp_dim, out_dim, kernel_size, stride, padding=(kernel_size - 1) // 2, bias=True)
         self.relu = None
         self.bn = None
         if relu:
@@ -34,17 +34,17 @@ class Residual(nn.Module):
         super(Residual, self).__init__()
         self.relu = nn.ReLU()
         self.bn1 = nn.BatchNorm2d(inp_dim)
-        self.conv1 = Conv(inp_dim, int(out_dim/2), 1, relu=False)
-        self.bn2 = nn.BatchNorm2d(int(out_dim/2))
-        self.conv2 = Conv(int(out_dim/2), int(out_dim/2), 3, relu=False)
-        self.bn3 = nn.BatchNorm2d(int(out_dim/2))
-        self.conv3 = Conv(int(out_dim/2), out_dim, 1, relu=False)
+        self.conv1 = Conv(inp_dim, int(out_dim / 2), 1, relu=False)
+        self.bn2 = nn.BatchNorm2d(int(out_dim / 2))
+        self.conv2 = Conv(int(out_dim / 2), int(out_dim / 2), 3, relu=False)
+        self.bn3 = nn.BatchNorm2d(int(out_dim / 2))
+        self.conv3 = Conv(int(out_dim / 2), out_dim, 1, relu=False)
         self.skip_layer = Conv(inp_dim, out_dim, 1, relu=False)
         if inp_dim == out_dim:
             self.need_skip = False
         else:
             self.need_skip = True
-        
+
     def forward(self, x):
         if self.need_skip:
             residual = self.skip_layer(x)
@@ -60,7 +60,7 @@ class Residual(nn.Module):
         out = self.relu(out)
         out = self.conv3(out)
         out += residual
-        return out 
+        return out
 
 
 class Hourglass(nn.Module):
@@ -74,7 +74,7 @@ class Hourglass(nn.Module):
         self.n = n
         # Recursive hourglass
         if self.n > 1:
-            self.low2 = Hourglass(n-1, nf, bn=bn)
+            self.low2 = Hourglass(n - 1, nf, bn=bn)
         else:
             self.low2 = Residual(nf, nf)
         self.low3 = Residual(nf, f)

@@ -1,7 +1,7 @@
-import pytest
+import os
 
 from datasets.unity_eyes import UnityEyesDataset
-import os
+
 
 def test_unity_eyes():
     ds = UnityEyesDataset(img_dir=os.path.join(os.path.dirname(__file__), 'data/imgs'))

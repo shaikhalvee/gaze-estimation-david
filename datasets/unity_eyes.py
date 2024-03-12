@@ -1,15 +1,14 @@
 from __future__ import print_function, division
+
+import glob
+import json
 import os
 from typing import Optional
 
-import torch
-import numpy as np
-import matplotlib.pyplot as plt
-from torch.utils.data import Dataset, DataLoader
-import glob
-import os
 import cv2
-import json
+import torch
+from torch.utils.data import Dataset
+
 from util.preprocess import preprocess_unityeyes_image
 
 
@@ -39,6 +38,6 @@ class UnityEyesDataset(Dataset):
             json_data = json.load(f)
 
         eye_sample = preprocess_unityeyes_image(full_img, json_data)
-        sample = {'full_img': full_img, 'json_data': json_data }
+        sample = {'full_img': full_img, 'json_data': json_data}
         sample.update(eye_sample)
         return sample

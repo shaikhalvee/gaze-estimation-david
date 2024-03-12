@@ -96,7 +96,12 @@ def main():
                 util.gaze.draw_gaze(orig_frame, ep.landmarks[-2], gaze, length=60.0, thickness=2)
 
         cv2.imshow("Webcam", orig_frame)
-        cv2.waitKey(1)
+        key = cv2.waitKey(1)
+        if key == ord('q'):
+            break
+
+    webcam.release()
+    cv2.destroyAllWindows()
 
 
 def detect_landmarks(face, frame, scale_x=0, scale_y=0):

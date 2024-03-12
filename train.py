@@ -22,7 +22,8 @@ parser.add_argument('--nstack', type=int, default=3, help='Number of hourglass l
 parser.add_argument('--nfeatures', type=int, default=32, help='Number of feature maps to use.')
 parser.add_argument('--nlandmarks', type=int, default=34, help='Number of landmarks to be predicted.')
 parser.add_argument('--nepochs', type=int, default=10, help='Number of epochs to iterate over all training examples.')
-parser.add_argument('--start_from', help='A model checkpoint file to begin training from. This overrides all other arguments.')
+parser.add_argument('--start_from',
+                    help='A model checkpoint file to begin training from. This overrides all other arguments.')
 parser.add_argument('--out', default='checkpoint.pt', help='The output checkpoint filename')
 args = parser.parse_args()
 
@@ -47,12 +48,11 @@ def validate(eyenet: EyeNet, val_loader: DataLoader) -> float:
 def train_epoch(epoch: int,
                 eyenet: EyeNet,
                 optimizer,
-                train_loader : DataLoader,
+                train_loader: DataLoader,
                 val_loader: DataLoader,
                 best_val_loss: float,
                 checkpoint_fn: str,
                 writer: SummaryWriter):
-
     N = len(train_loader)
     for i_batch, sample_batched in enumerate(train_loader):
         i_batch += N * epoch
@@ -137,9 +137,9 @@ def main():
         nfeatures = start_from['nfeatures']
         nlandmarks = start_from['nlandmarks']
         best_val_loss = start_from['best_val_loss']
-        eyenet = EyeNet(nstack=nstack, nfeatures=nfeatures, nlandmarks=nlandmarks).to(device)
-        optimizer = torch.optim.Adam(eyenet.parameters(), lr=learning_rate)
-        eyenet.load_state_dict(start_from['model_state_dict'])
+        eye_net = EyeNet(nstack=nstack, nfeatures=nfeatures, nlandmarks=nlandmarks).to(device)
+        optimizer = torch.optim.Adam(eye_net.parameters(), lr=learning_rate)
+        eye_net.load_state_dict(start_from['model_state_dict'])
         optimizer.load_state_dict(start_from['optimizer_state_dict'])
     elif os.path.exists(args.out):
         raise Exception(f'Out file {args.out} already exists.')
@@ -148,11 +148,11 @@ def main():
         nfeatures = args.nfeatures
         nlandmarks = args.nlandmarks
         best_val_loss = float('inf')
-        eyenet = EyeNet(nstack=nstack, nfeatures=nfeatures, nlandmarks=nlandmarks).to(device)
-        optimizer = torch.optim.Adam(eyenet.parameters(), lr=learning_rate)
+        eye_net = EyeNet(nstack=nstack, nfeatures=nfeatures, nlandmarks=nlandmarks).to(device)
+        optimizer = torch.optim.Adam(eye_net.parameters(), lr=learning_rate)
 
     train(
-        eyenet=eyenet,
+        eyenet=eye_net,
         optimizer=optimizer,
         nepochs=args.nepochs,
         best_val_loss=best_val_loss,
