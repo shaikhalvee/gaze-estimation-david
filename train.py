@@ -12,7 +12,7 @@ from datasets.unity_eyes import UnityEyesDataset
 from models.eyenet import EyeNet
 
 # Set up pytorch
-torch.backends.cudnn.enabled = False
+torch.backends.cudnn.enabled = True
 torch.manual_seed(0)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print('Device', device)
