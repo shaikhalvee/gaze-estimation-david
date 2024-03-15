@@ -1,17 +1,14 @@
+import os
 from typing import List, Optional
 
-import torch
-from torch.nn import DataParallel
-
-from models.eyenet import EyeNet
-import os
-import numpy as np
 import cv2
 import dlib
-import imutils
-import util.gaze
+import numpy as np
+import torch
 from imutils import face_utils
 
+import util.gaze
+from models.eyenet import EyeNet
 from util.eye_prediction import EyePrediction
 from util.eye_sample import EyeSample
 
@@ -182,7 +179,8 @@ def smooth_eye_landmarks(eye: EyePrediction, prev_eye: Optional[EyePrediction], 
     return EyePrediction(
         eye_sample=eye.eye_sample,
         landmarks=smoothing * prev_eye.landmarks + (1 - smoothing) * eye.landmarks,
-        gaze=gaze_smoothing * prev_eye.gaze + (1 - gaze_smoothing) * eye.gaze)
+        gaze=gaze_smoothing * prev_eye.gaze + (1 - gaze_smoothing) * eye.gaze
+    )
 
 
 def run_eyenet(eyes: List[EyeSample], ow=160, oh=96) -> List[EyePrediction]:

@@ -37,4 +37,3 @@ def softargmax1d(input, beta=100):
     indices = torch.linspace(0, 1, n)
     result = torch.sum((n - 1) * input * indices, dim=-1)
     return result
-

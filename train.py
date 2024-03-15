@@ -1,14 +1,15 @@
-import os
-
-import torch
-from datasets.unity_eyes import UnityEyesDataset
-from torch.utils.data import DataLoader
-from models.eyenet import EyeNet
-from torch.utils.tensorboard import SummaryWriter
-from datetime import datetime
-import numpy as np
-import cv2
 import argparse
+import os
+from datetime import datetime
+
+import cv2
+import numpy as np
+import torch
+from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
+
+from datasets.unity_eyes import UnityEyesDataset
+from models.eyenet import EyeNet
 
 # Set up pytorch
 torch.backends.cudnn.enabled = False

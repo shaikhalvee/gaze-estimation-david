@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+
 from models.layers import Conv, Hourglass, Pool, Residual
 from models.losses import HeatmapLoss
 from util.softargmax import softargmax2d
@@ -44,6 +45,7 @@ class EyeNet(nn.Module):
             Residual(128, nfeatures)
         )
 
+        # a stack of 'nstack' amount in hourglass modules
         self.hgs = nn.ModuleList([
             nn.Sequential(
                 Hourglass(4, nfeatures, bn, increase),
@@ -59,7 +61,8 @@ class EyeNet(nn.Module):
         self.merge_features = nn.ModuleList([Merge(nfeatures, nfeatures) for i in range(nstack - 1)])
         self.merge_preds = nn.ModuleList([Merge(nlandmarks, nfeatures) for i in range(nstack - 1)])
 
-        self.gaze_fc1 = nn.Linear(in_features=int(nfeatures * self.img_w * self.img_h / 64 + nlandmarks*2), out_features=256)
+        self.gaze_fc1 = nn.Linear(in_features=int(nfeatures * self.img_w * self.img_h / 64 + nlandmarks * 2),
+                                  out_features=256)
         self.gaze_fc2 = nn.Linear(in_features=256, out_features=2)
 
         self.nstack = nstack

@@ -3,7 +3,7 @@ from torch import nn
 Pool = nn.MaxPool2d
 
 
-def batchnorm(x):
+def batch_norm(x):
     return nn.BatchNorm2d(x.size()[1])(x)
 
 
